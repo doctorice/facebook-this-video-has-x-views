@@ -1,0 +1,4 @@
+Pillow
+youtube-data-api
+facebook-sdk
+schedule
