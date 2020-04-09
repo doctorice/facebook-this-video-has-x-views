@@ -1,7 +1,7 @@
 '''
 MIT License
 
-Copyright Doctorice (c) 2018
+Copyright Doctorice (c) 2020
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,14 @@ SOFTWARE.
 
 import random
 import facebook
-import schedule
 from io import BytesIO
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from youtube_api import YoutubeDataApi
 
-YOUTUBE_API_KEY = os.environ['YOUTUBE_API_KEY']
-FACEBOOK_API_KEY = os.environ["FACEBOOK_API_KEY"]
+YOUTUBE_API_KEY = 'INSERT KEY'
+FACEBOOK_API_KEY = 'INSERT KEY'
 VIDEO_ID = 'BxV14h0kFs0'
 
 def Youtube_Scrape(api_key, vid):
@@ -86,7 +85,7 @@ def main():
 	Where the main thing happens all here
 	"""
 	metadata = Youtube_Scrape(api_key=YOUTUBE_API_KEY, vid=VIDEO_ID)
-	file ='frames/' + str(random.randint(0, 639)) + '.jpg'
+	file ='frames/' + str(random.randint(0, 639)) + '.jpg' #frames folder are not available for this repository.
 	title = metadata['video_title']
 	views = metadata['video_view_count']
 	likes = metadata['video_like_count']
@@ -94,10 +93,5 @@ def main():
 	img = ImgFormatter(file=file,title=title, views=views,numlikes=likes,numdislikes=dislikes)
 	facebook_img(fb_token=FACEBOOK_API_KEY, image=img, caption=f'The video has {str(views)} views.', comment=metadata['video_description'])
 
-#Post the output on cron
-main()
-schedule.every().day.at("12:05").do(main)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+if __name__ == '__main__':
+	main()
